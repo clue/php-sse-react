@@ -1,0 +1,22 @@
+{
+    "name": "clue/sse-react",
+    "description": "Streaming, event-driven Server-Side Events server (aka. SSE or EventSource)",
+    "keywords": ["Server-Side Events", "SSE", "EventSource", "event-driven", "ReactPHP", "async"],
+    "homepage": "https://github.com/clue/php-sse-react",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Lück",
+            "email": "christian@lueck.tv"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Clue\\React\\Sse\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.3",
+        "react/event-loop": "~0.4.0|~0.3.0",
+        "react/http": "~0.4.0|~0.3.0",
+        "react/stream": "~0.4.0|~0.3.0"
+    }
+}
