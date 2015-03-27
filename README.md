@@ -4,6 +4,10 @@ Streaming, event-driven Server-Side Events server (aka. SSE or EventSource), bui
 
 > Note: This project is in early alpha stage! Feel free to report any issues you encounter.
 
+## Quickstart example
+
+See the [examples](examples).
+
 ## Install
 
 The recommended way to install this library is [through composer](http://getcomposer.org). [New to composer?](http://getcomposer.org/doc/00-intro.md)

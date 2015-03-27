@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>EventSource example</title>
+    <script>
+      var es = new EventSource("demo");
+      es.addEventListener("message", function (event) {
+    	  var div = document.createElement("div");
+          div.appendChild(document.createTextNode(event.data));
+          document.body.appendChild(div);
+      });
+    </script>
+</head>
+<body>
+</body>
+</html>
