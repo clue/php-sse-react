@@ -1,7 +1,7 @@
 {
     "name": "clue/sse-react",
-    "description": "Streaming, event-driven Server-Side Events server (aka. SSE or EventSource)",
-    "keywords": ["Server-Side Events", "SSE", "EventSource", "event-driven", "ReactPHP", "async"],
+    "description": "Streaming, async HTML5 Server-Sent Events server (aka. SSE or EventSource)",
+    "keywords": ["Server-Sent Events", "SSE", "EventSource", "event-driven", "ReactPHP", "async"],
     "homepage": "https://github.com/clue/php-sse-react",
     "license": "MIT",
     "authors": [

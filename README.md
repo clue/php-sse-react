@@ -1,6 +1,6 @@
 # clue/sse-react [![Build Status](https://travis-ci.org/clue/php-sse-react.svg?branch=master)](https://travis-ci.org/clue/php-sse-react)
 
-Streaming, event-driven Server-Side Events server (aka. SSE or EventSource), built on top of [React PHP](http://reactphp.org/).
+Streaming, async HTML5 Server-Sent Events server (aka. SSE or EventSource), built on top of [React PHP](http://reactphp.org/).
 
 > Note: This project is in early alpha stage! Feel free to report any issues you encounter.
 
