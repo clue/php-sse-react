@@ -37,7 +37,9 @@ $loop->addPeriodicTimer(2.0, function() use ($channel) {
     $channel->writeMessage('ticking ' . mt_rand(1, 5) . '...');
 });
 
-$socket->listen(0, '0.0.0.0');
+$socket->listen(isset($argv[1]) ? $argv[1] : 0, '0.0.0.0');
 
-echo 'Server now listening on http://localhost:' . $socket->getPort() . PHP_EOL;
+echo 'Server now listening on http://localhost:' . $socket->getPort() . ' (port is first parameter)' . PHP_EOL;
+echo 'This will send a message every 2 seconds' . PHP_EOL;
+
 $loop->run();
