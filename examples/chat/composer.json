@@ -1,0 +1,12 @@
+{
+    "require": {
+        "clue/sse-react": "*@dev || *",
+        "react/socket-client": "^0.5"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "../../"
+        }
+    ]
+}
