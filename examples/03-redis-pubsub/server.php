@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 use Clue\React\Sse\BufferedChannel;
 use React\Http\Request;
