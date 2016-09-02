@@ -16,6 +16,11 @@ $http->on('request', function (Request $request, Response $response) use ($chann
     if ($request->getPath() === '/') {
         $response->writeHead('200', array('Content-Type' => 'text/html'));
         $response->end(file_get_contents(__DIR__ . '/eventsource.html'));
+        $channel->writeMessage('New person connected from '. $request->remoteAddress);
+        return;
+    } elseif ($request->getPath() === '/styles.css') {
+        $response->writeHead('200', array('Content-Type' => 'text/css'));
+        $response->end(file_get_contents(__DIR__ . '/styles.css'));
         return;
     }
 
