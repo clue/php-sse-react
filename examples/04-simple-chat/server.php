@@ -27,7 +27,8 @@ $http->on('request', function (Request $request, Response $response) use ($chann
         case '/message':
             $query = $request->getQuery();
             if (array_key_exists('message', $query)) {
-                $channel->writeMessage($query['message']);
+                $message = array('message' => $query['message'], 'username' => $query['username']);
+                $channel->writeMessage(json_encode($message));
             }
             $response->writeHead('201', array('Content-Type' => 'text/json'));
             $response->end();
@@ -51,6 +52,5 @@ $http->on('request', function (Request $request, Response $response) use ($chann
 $socket->listen(isset($argv[1]) ? $argv[1] : 0, '0.0.0.0');
 
 echo 'Server now listening on http://localhost:' . $socket->getPort() . ' (port is first parameter)' . PHP_EOL;
-echo 'This will send a message every 2 seconds' . PHP_EOL;
 
 $loop->run();

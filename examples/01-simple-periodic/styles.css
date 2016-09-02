@@ -21,9 +21,29 @@ button {
     text-transform: uppercase;
 }
 
+button:focus {
+    text-decoration: none;
+    outline: 0 none;
+}
+
 input {
     border: 0 none;
     padding: 0.5rem 1rem;
+}
+
+input:focus {
+    outline: 0 none;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+form input {
+    transition: all 0.5s;
+    flex: 1
 }
 
 .chat {
@@ -67,12 +87,40 @@ input {
     border-top: 1px solid #e9e9e9;
 }
 
-.chat-form {
-    width: 100%;
+.username-form-container {
+    transition: opacity 0.15s linear 0.55s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
 }
 
-.chat-form input {
-    flex: 1
+.username-form-container .username-form {
+    transition: transform 0.5s;
+    width: calc(100% - 20vw - 4rem);
+    max-width: calc(1100px - 4rem);
+}
+
+.hide-username .username-form-container {
+    opacity: 0;
+}
+
+.hide-username .username-form {
+    transform: translate3d(0, -35vh, 0);
+}
+
+.hide-username .username-form input {
+    padding: 0;
+    height: 1rem;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.hide-username .username-form button {
+    display: none;
 }
