@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>EventSource example</title>
+    <script>
+        var es = new EventSource('demo');
+        es.addEventListener('message', function(event) {
+            var $messages = document.querySelectorAll('.chat-messages')[0];
+            var message = document.createElement('div');
+            message.innerHTML = event.data;
+            message.classList.add('chat-message');
+            if ($messages.childNodes.length !== 0) {
+                $messages.insertBefore(message, $messages.firstChild);
+            } else {
+                $messages.appendChild(message);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var $chatForm = document.querySelectorAll('.chat-form')[0];
+            $chatForm.addEventListener('submit', function($event) {
+                $event.preventDefault();
+                var $input = document.querySelectorAll('.chat-form input')[0];
+                if ($input.value.length) {
+                    fetch('/message?message=' + $input.value).then(function() {
+                        $input.value = '';
+                    });
+                }
+            });
+        });
+    </script>
+
+    <link href="styles.css" media="all" rel="stylesheet"/>
+</head>
+<body>
+<div class="chat">
+    <div class="chat-header"></div>
+    <div class="chat-messages"></div>
+    <div class="chat-footer">
+        <form class="chat-form">
+            <input type="text" placeholder="Enter chat message">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
