@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>EventSource example</title>
+    <script>
+        var es = new EventSource('demo'), username = '';
+        es.addEventListener('message', function(event) {
+            var data = JSON.parse(event.data);
+            var $messages = document.querySelectorAll('.chat-messages')[0];
+            var message = document.createElement('div');
+            if (data.username !== '') {
+                message.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
+            } else {
+                message.innerHTML = data.message;
+            }
+            message.classList.add('chat-message');
+            if ($messages.childNodes.length !== 0) {
+                $messages.insertBefore(message, $messages.firstChild);
+            } else {
+                $messages.appendChild(message);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var $chatForm = document.querySelectorAll('.chat-form')[0];
+            $chatForm.addEventListener('submit', function($event) {
+                $event.preventDefault();
+                var $input = document.querySelectorAll('.chat-form input')[0];
+                if ($input.value.length) {
+                    fetch(`/message?message=${$input.value}&username=${username}`).then(function() {
+                        $input.value = '';
+                    });
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var $chatForm = document.querySelectorAll('.username-form')[0];
+            $chatForm.addEventListener('submit', function($event) {
+                $event.preventDefault();
+                var $input = document.querySelectorAll('.username-form input')[0];
+                if ($input.value.length > 3) {
+                    document.activeElement.blur();
+                    username = $input.value;
+                    document.querySelectorAll('.chat-header')[0].innerHTML = username;
+                    document.body.classList.add('hide-username');
+                    setTimeout(function() {
+                        document.querySelectorAll('.username-form-container')[0].style.display = 'none';
+                        document.querySelectorAll('.chat-form input')[0].focus();
+                    }, 800);
+                }
+            });
+        });
+    </script>
+
+    <link href="styles.css" media="all" rel="stylesheet"/>
+</head>
+<body>
+<div class="chat">
+    <div class="chat-header"></div>
+    <div class="chat-messages"></div>
+    <div class="chat-footer">
+        <form class="chat-form">
+            <input type="text" placeholder="Enter chat message">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+<div class="username-form-container">
+    <form class="username-form">
+        <input type="text" placeholder="Enter username" autofocus="">
+        <button type="submit">Enter</button>
+    </form>
+</div>
+</body>
+</html>
