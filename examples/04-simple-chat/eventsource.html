@@ -9,7 +9,11 @@
             var data = JSON.parse(event.data);
             var $messages = document.querySelectorAll('.chat-messages')[0];
             var message = document.createElement('div');
-            message.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
+            if (data.username !== '') {
+                message.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
+            } else {
+                message.innerHTML = data.message;
+            }
             message.classList.add('chat-message');
             if ($messages.childNodes.length !== 0) {
                 $messages.insertBefore(message, $messages.firstChild);

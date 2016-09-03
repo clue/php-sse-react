@@ -18,7 +18,8 @@ $http->on('request', function (Request $request, Response $response) use ($chann
         case '/':
             $response->writeHead('200', array('Content-Type' => 'text/html'));
             $response->end(file_get_contents(__DIR__ . '/eventsource.html'));
-            $channel->writeMessage('New person connected from '. $request->remoteAddress);
+            $message = array('message' => 'New person connected from '. $request->remoteAddress, 'username' => '');
+            $channel->writeMessage(json_encode($message));
             return;
         case '/styles.css':
             $response->writeHead('200', array('Content-Type' => 'text/css'));
@@ -27,7 +28,7 @@ $http->on('request', function (Request $request, Response $response) use ($chann
         case '/message':
             $query = $request->getQuery();
             if (array_key_exists('message', $query)) {
-                $message = array('message' => $query['message'], 'username' => $query['username']);
+                $message = array('message' => htmlspecialchars($query['message']), 'username' => htmlspecialchars($query['username']));
                 $channel->writeMessage(json_encode($message));
             }
             $response->writeHead('201', array('Content-Type' => 'text/json'));
@@ -44,7 +45,7 @@ $http->on('request', function (Request $request, Response $response) use ($chann
     $channel->connect($response, $id);
 
     $response->on('close', function () use ($response, $channel, $request) {
-        echo $request->remoteAddress. 'disconnected' . PHP_EOL;
+        echo $request->remoteAddress . 'disconnected' . PHP_EOL;
         $channel->disconnect($response);
     });
 });
