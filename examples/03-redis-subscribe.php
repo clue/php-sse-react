@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Clue\React\Sse\BufferedChannel;
 use React\Http\Request;
@@ -16,7 +16,7 @@ $http = new React\Http\Server($socket);
 $http->on('request', function (Request $request, Response $response) use ($channel) {
     if ($request->getPath() === '/') {
         $response->writeHead('200', array('Content-Type' => 'text/html'));
-        $response->end(file_get_contents(__DIR__ . '/../01-simple-periodic/eventsource.html'));
+        $response->end(file_get_contents(__DIR__ . '/00-eventsource.html'));
         return;
     }
 
