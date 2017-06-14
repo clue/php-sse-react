@@ -19,6 +19,10 @@ $http->on('request', function (Request $request, Response $response) use ($chann
         $response->writeHead('200', array('Content-Type' => 'text/html'));
         $response->end(file_get_contents(__DIR__ . '/../01-simple-periodic/eventsource.html'));
         return;
+    } elseif ($request->getPath() === '/styles.css') {
+        $response->writeHead('200', array('Content-Type' => 'text/css'));
+        $response->end(file_get_contents(__DIR__ . '/../01-simple-periodic/styles.css'));
+        return;
     }
 
     echo 'connected' . PHP_EOL;
