@@ -6,7 +6,7 @@ class BufferedChannelTest extends TestCase
 {
     public function testNumberOfWritesToStream()
     {
-        $stream = $this->getMock('React\Stream\WritableStreamInterface');
+        $stream = $this->getMockBuilder('React\Stream\WritableStreamInterface')->getMock();
 
         $called = 0;
         $stream->expects($this->any())->method('write')->will($this->returnCallback(function () use (&$called) {
@@ -44,7 +44,7 @@ class BufferedChannelTest extends TestCase
 
     public function testResultingStreamBuffer()
     {
-        $stream = $this->getMock('React\Stream\WritableStreamInterface');
+        $stream = $this->getMockBuilder('React\Stream\WritableStreamInterface')->getMock();
 
         $buffered = '';
         $stream->expects($this->any())->method('write')->will($this->returnCallback(function ($data) use (&$buffered) {
