@@ -2,19 +2,22 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>EventSource example</title>
+    <title>EventSource Chat</title>
     <script>
-        var es = new EventSource('demo'), username = '';
+        var es = new EventSource('chat'), username = '';
         es.addEventListener('message', function(event) {
             var data = JSON.parse(event.data);
-            var $messages = document.querySelectorAll('.chat-messages')[0];
+
             var message = document.createElement('div');
-            if (data.username !== '') {
-                message.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
-            } else {
-                message.innerHTML = data.message;
+            if (data.username) {
+                var strong = document.createElement('strong');
+                strong.appendChild(document.createTextNode(data.username));
+                message.appendChild(strong);
             }
+            message.appendChild(document.createTextNode(data.message));
             message.classList.add('chat-message');
+
+            var $messages = document.querySelector('.chat-messages');
             if ($messages.childNodes.length !== 0) {
                 $messages.insertBefore(message, $messages.firstChild);
             } else {
@@ -23,31 +26,29 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            var $chatForm = document.querySelectorAll('.chat-form')[0];
+            var $chatForm = document.querySelector('.chat-form');
             $chatForm.addEventListener('submit', function($event) {
                 $event.preventDefault();
-                var $input = document.querySelectorAll('.chat-form input')[0];
+                var $input = document.querySelector('.chat-form input');
                 if ($input.value.length) {
-                    fetch(`/message?message=${$input.value}&username=${username}`).then(function() {
+                    fetch('/message?message=' + encodeURIComponent($input.value) + '&username=' + encodeURIComponent(username)).then(function() {
                         $input.value = '';
                     });
                 }
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var $chatForm = document.querySelectorAll('.username-form')[0];
+            var $chatForm = document.querySelector('.username-form');
             $chatForm.addEventListener('submit', function($event) {
                 $event.preventDefault();
-                var $input = document.querySelectorAll('.username-form input')[0];
+                var $input = document.querySelector('.username-form input');
                 if ($input.value.length > 3) {
                     document.activeElement.blur();
                     username = $input.value;
-                    document.querySelectorAll('.chat-header')[0].innerHTML = username;
+                    document.querySelector('.chat-header').innerText = username;
                     document.body.classList.add('hide-username');
                     setTimeout(function() {
-                        document.querySelectorAll('.username-form-container')[0].style.display = 'none';
-                        document.querySelectorAll('.chat-form input')[0].focus();
+                        document.querySelector('.username-form-container').style.display = 'none';
+                        document.querySelector('.chat-form input').focus();
                     }, 800);
                 }
             });
@@ -69,7 +70,7 @@
 </div>
 <div class="username-form-container">
     <form class="username-form">
-        <input type="text" placeholder="Enter username" autofocus="">
+        <input type="text" placeholder="Enter username" autofocus>
         <button type="submit">Enter</button>
     </form>
 </div>
