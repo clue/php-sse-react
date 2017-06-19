@@ -19,10 +19,15 @@ $http->on('request', function (Request $request, Response $response) use ($chann
         return;
     }
 
+    if ($request->getPath() !== '/demo') {
+        $response->writeHead(404);
+        $response->end('Not Found');
+        return;
+    }
+
     echo 'connected' . PHP_EOL;
 
-    $headers = $request->getHeaders();
-    $id = isset($headers['Last-Event-ID']) ? $headers['Last-Event-ID'] : null;
+    $id = $request->getHeaderLine('Last-Event-ID');
 
     $response->writeHead(200, array('Content-Type' => 'text/event-stream'));
     $channel->connect($response, $id);

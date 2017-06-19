@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.3",
         "react/event-loop": "~0.4.0|~0.3.0",
-        "react/http": "~0.4.0|~0.3.0",
+        "react/http": "^0.4.4",
         "react/stream": "~0.4.0|~0.3.0"
     },
     "require-dev": {
