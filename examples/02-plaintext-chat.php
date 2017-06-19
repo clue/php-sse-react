@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Clue\React\Sse\BufferedChannel;
 use React\Http\Request;
@@ -17,14 +17,19 @@ $http = new React\Http\Server($socket);
 $http->on('request', function (Request $request, Response $response) use ($channel) {
     if ($request->getPath() === '/') {
         $response->writeHead('200', array('Content-Type' => 'text/html'));
-        $response->end(file_get_contents(__DIR__ . '/../01-simple-periodic/eventsource.html'));
+        $response->end(file_get_contents(__DIR__ . '/00-eventsource.html'));
+        return;
+    }
+
+    if ($request->getPath() !== '/demo') {
+        $response->writeHead(404);
+        $response->end('Not Found');
         return;
     }
 
     echo 'connected' . PHP_EOL;
 
-    $headers = $request->getHeaders();
-    $id = isset($headers['Last-Event-ID']) ? $headers['Last-Event-ID'] : null;
+    $id = $request->getHeaderLine('Last-Event-ID');
 
     $response->writeHead(200, array('Content-Type' => 'text/event-stream'));
     $channel->connect($response, $id);
