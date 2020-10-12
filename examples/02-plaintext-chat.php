@@ -3,18 +3,16 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Clue\React\Sse\BufferedChannel;
-use React\Http\Request;
-use React\Http\Response;
-use React\SocketClient\TcpConnector;
-use React\Stream\Stream;
-use React\Stream\ThroughStream;
 use Psr\Http\Message\ServerRequestInterface;
+use React\Http\Message\Response;
+use React\Socket\TcpConnector;
+use React\Stream\ThroughStream;
 
 $loop = React\EventLoop\Factory::create();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server(function (ServerRequestInterface $request) use ($channel) {
+$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel, $loop) {
     if ($request->getUri()->getPath() === '/') {
         return new Response(
             200,
@@ -32,10 +30,14 @@ $http = new React\Http\Server(function (ServerRequestInterface $request) use ($c
     $id = $request->getHeaderLine('Last-Event-ID');
 
     $stream = new ThroughStream();
-    $channel->connect($stream, $id);
+
     $stream->on('close', function () use ($stream, $channel) {
         echo 'disconnected' . PHP_EOL;
         $channel->disconnect($stream);
+    });
+
+    $loop->futureTick(function () use ($channel, $stream, $id) {
+        $channel->connect($stream, $id);
     });
 
     return new Response(
@@ -47,7 +49,7 @@ $http = new React\Http\Server(function (ServerRequestInterface $request) use ($c
 
 $port = isset($argv[2]) ? $argv[2] : 8000;
 $connector = new TcpConnector($loop);
-$connector->create('127.0.0.1', $port)->then(function (Stream $stream) use ($channel) {
+$connector->connect('127.0.0.1:' . $port)->then(function (React\Socket\ConnectionInterface $stream) use ($channel) {
     $buffer = '';
 
     $stream->on('data', function ($data) use (&$buffer, $channel) {

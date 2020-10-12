@@ -2,6 +2,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+PHPUnit_Framework_Error_Deprecated::$enabled = false;
+
 class TestCase extends PHPUnit_Framework_TestCase
 {
     protected function expectCallableOnce()

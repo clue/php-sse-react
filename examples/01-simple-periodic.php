@@ -3,16 +3,15 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Clue\React\Sse\BufferedChannel;
-use React\Http\Request;
-use React\Http\Response;
 use Psr\Http\Message\ServerRequestInterface;
+use React\Http\Message\Response;
 use React\Stream\ThroughStream;
 
 $loop = React\EventLoop\Factory::create();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server(function (ServerRequestInterface $request) use ($channel) {
+$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel) {
     if ($request->getUri()->getPath() === '/') {
         return new Response(
             200,
@@ -46,7 +45,7 @@ $http = new React\Http\Server(function (ServerRequestInterface $request) use ($c
 $socket = new \React\Socket\Server(isset($argv[1]) ? '0.0.0.0:' . $argv[1] : '0.0.0.0:0', $loop);
 $http->listen($socket);
 
-$loop->addPeriodicTimer(2.0, function() use ($channel) {
+$loop->addPeriodicTimer(2.0, function () use ($channel) {
     $channel->writeMessage('ticking ' . mt_rand(1, 5) . '...');
 });
 

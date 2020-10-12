@@ -2,18 +2,17 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Clue\React\Sse\BufferedChannel;
-use React\Http\Request;
-use React\Http\Response;
 use Clue\React\Redis\Factory;
+use Clue\React\Sse\BufferedChannel;
 use Psr\Http\Message\ServerRequestInterface;
+use React\Http\Message\Response;
 use React\Stream\ThroughStream;
 
 $loop = React\EventLoop\Factory::create();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server(function (ServerRequestInterface $request) use ($channel) {
+$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel) {
     if ($request->getUri()->getPath() === '/') {
         return new Response(
             '200',
@@ -47,7 +46,7 @@ $http = new React\Http\Server(function (ServerRequestInterface $request) use ($c
 
 $red = isset($argv[2]) ? $argv[2] : 'channel';
 $factory = new Factory($loop);
-$factory->createClient()->then(function (Clue\React\Redis\Client $client) use ($channel, $red) {
+$factory->createClient("localhost")->then(function (Clue\React\Redis\Client $client) use ($channel, $red) {
     $client->on('message', function ($topic, $message) use ($channel) {
         $channel->writeMessage($message);
     });

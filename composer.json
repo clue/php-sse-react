@@ -15,13 +15,12 @@
     },
     "require": {
         "php": ">=5.3",
-        "react/event-loop": "~0.4.0|~0.3.0",
-        "react/http": "^0.7.4",
-        "react/stream": "~0.4.0|~0.3.0"
+        "react/event-loop": "^1.0",
+        "react/http": "^1.0",
+        "react/stream": "^1.0"
     },
     "require-dev": {
-        "clue/redis-react": "^0.5",
-        "phpunit/phpunit": "^5.0 || ^4.8",
-        "react/socket-client": "^0.5"
+        "clue/redis-react": "^2.4",
+        "phpunit/phpunit": "^5.0 || ^4.8"
     }
 }

@@ -3,16 +3,15 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Clue\React\Sse\BufferedChannel;
-use React\Http\Request;
-use React\Http\Response;
 use Psr\Http\Message\ServerRequestInterface;
+use React\Http\Message\Response;
 use React\Stream\ThroughStream;
 
 $loop = React\EventLoop\Factory::create();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server(function (ServerRequestInterface $request) use ($channel) {
+$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel) {
     $stream = new ThroughStream();
 
     switch ($request->getUri()->getPath()) {
@@ -68,6 +67,6 @@ $http = new React\Http\Server(function (ServerRequestInterface $request) use ($c
 $socket = new \React\Socket\Server(isset($argv[1]) ? '0.0.0.0:' . $argv[1] : '0.0.0.0:0', $loop);
 $http->listen($socket);
 
-echo 'Server now listening on http://localhost:' . $socket->getAddress() . ' (port is first parameter)' . PHP_EOL;
+echo 'Server now listening on ' . $socket->getAddress() . ' (port is first parameter)' . PHP_EOL;
 
 $loop->run();
