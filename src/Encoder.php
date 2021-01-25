@@ -5,13 +5,14 @@ namespace Clue\React\Sse;
 class Encoder
 {
     const EOL = "\n";
+
     /**
      * write a single message field name and value pair (should not include newlines)
      *
      * should not be be used to write data field (multiline contents)
      *
      * @param string $name
-     * @param value $value
+     * @param string $value
      * @return string
      */
     public function encodeField($name, $value)
