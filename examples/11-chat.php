@@ -11,9 +11,7 @@ $loop = React\EventLoop\Factory::create();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel) {
-    $stream = new ThroughStream();
-
+$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel, $loop) {
     switch ($request->getUri()->getPath()) {
         case '/':
             return new Response(
@@ -39,9 +37,12 @@ $http = new React\Http\Server($loop, function (ServerRequestInterface $request) 
                 array('Content-Type' => 'text/json')
             );
         case '/chat':
-            $id = $request->getHeaderLine('Last-Event-ID');
+            $stream = new ThroughStream();
 
-            $channel->connect($stream, $id);
+            $id = $request->getHeaderLine('Last-Event-ID');
+            $loop->futureTick(function () use ($channel, $stream, $id) {
+                $channel->connect($stream, $id);
+            });
 
             $serverParams = $request->getServerParams();
             $message = array('message' => 'New person connected from '. $serverParams['REMOTE_ADDR']);

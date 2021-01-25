@@ -11,7 +11,7 @@ $loop = React\EventLoop\Factory::create();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel) {
+$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel, $loop) {
     if ($request->getUri()->getPath() === '/') {
         return new Response(
             200,
@@ -26,9 +26,12 @@ $http = new React\Http\Server($loop, function (ServerRequestInterface $request) 
 
     echo 'connected' . PHP_EOL;
 
-    $id = $request->getHeaderLine('Last-Event-ID');
     $stream = new ThroughStream();
-    $channel->connect($stream, $id);
+
+    $id = $request->getHeaderLine('Last-Event-ID');
+    $loop->futureTick(function () use ($channel, $stream, $id) {
+        $channel->connect($stream, $id);
+    });
 
     $stream->on('close', function () use ($stream, $channel) {
         echo 'disconnected' . PHP_EOL;

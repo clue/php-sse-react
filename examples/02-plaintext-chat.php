@@ -27,17 +27,16 @@ $http = new React\Http\Server($loop, function (ServerRequestInterface $request) 
 
     echo 'connected' . PHP_EOL;
 
-    $id = $request->getHeaderLine('Last-Event-ID');
-
     $stream = new ThroughStream();
+
+    $id = $request->getHeaderLine('Last-Event-ID');
+    $loop->futureTick(function () use ($channel, $stream, $id) {
+        $channel->connect($stream, $id);
+    });
 
     $stream->on('close', function () use ($stream, $channel) {
         echo 'disconnected' . PHP_EOL;
         $channel->disconnect($stream);
-    });
-
-    $loop->futureTick(function () use ($channel, $stream, $id) {
-        $channel->connect($stream, $id);
     });
 
     return new Response(

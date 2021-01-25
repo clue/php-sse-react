@@ -2,7 +2,6 @@
 
 namespace Clue\React\Sse;
 
-use React\Stream\Stream;
 use React\Stream\WritableStreamInterface;
 
 /**
