@@ -1,6 +1,7 @@
 # clue/sse-react
 
 [![CI status](https://github.com/clue/php-sse-react/workflows/CI/badge.svg)](https://github.com/clue/php-sse-react/actions)
+[![installs on Packagist](https://img.shields.io/packagist/dt/clue/sse-react?color=blue&label=installs%20on%20Packagist)](https://packagist.org/packages/clue/sse-react)
 
 Streaming, async HTML5 Server-Sent Events server (aka. SSE or EventSource), built on top of [React PHP](http://reactphp.org/).
 
