@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <phpunit bootstrap="tests/bootstrap.php"
          colors="true"
+         verbose="true"
+         cacheResultFile=".phpunit.cache/test-results"
+         failOnRisky="true"
+         failOnWarning="true"
+         testdox="false"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
->
+         convertWarningsToExceptions="true">
     <testsuites>
         <testsuite name="SSE Test Suite">
-            <directory>./tests/</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory>./src/</directory>
-        </whitelist>
-    </filter>
+    <logging>
+        <junit outputFile="build/logs/junit.xml"/>
+    </logging>
+    <coverage cacheDirectory=".phpunit.cache/code-coverage"
+              processUncoveredFiles="true"
+              ignoreDeprecatedCodeUnits="true">
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+        <report>
+            <clover outputFile="build/logs/clover.xml"/>
+            <html outputDirectory="build/logs/html" lowUpperBound="50" highLowerBound="90"/>
+        </report>
+    </coverage>
 </phpunit>

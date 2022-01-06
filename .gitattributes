@@ -4,3 +4,5 @@
 /examples/ export-ignore
 /phpunit.xml.dist export-ignore
 /tests/ export-ignore
+
+*.php diff=php

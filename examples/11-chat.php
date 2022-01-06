@@ -7,11 +7,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
 use React\Stream\ThroughStream;
 
-$loop = React\EventLoop\Factory::create();
+$loop = React\EventLoop\Loop::get();
 
 $channel = new BufferedChannel();
 
-$http = new React\Http\Server($loop, function (ServerRequestInterface $request) use ($channel, $loop) {
+$http = new React\Http\HttpServer($loop, function (ServerRequestInterface $request) use ($channel, $loop) {
     switch ($request->getUri()->getPath()) {
         case '/':
             return new Response(
@@ -65,7 +65,7 @@ $http = new React\Http\Server($loop, function (ServerRequestInterface $request) 
     }
 });
 
-$socket = new \React\Socket\Server(isset($argv[1]) ? '0.0.0.0:' . $argv[1] : '0.0.0.0:0', $loop);
+$socket = new \React\Socket\SocketServer(isset($argv[1]) ? '0.0.0.0:' . $argv[1] : '0.0.0.0:0', [], $loop);
 $http->listen($socket);
 
 echo 'Server now listening on ' . $socket->getAddress() . ' (port is first parameter)' . PHP_EOL;
