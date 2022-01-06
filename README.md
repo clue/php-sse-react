@@ -15,7 +15,7 @@ See the [examples](examples).
 
 The recommended way to install this library is [through composer](http://getcomposer.org). [New to composer?](http://getcomposer.org/doc/00-intro.md)
 
-```JSON
+```json
 {
     "require": {
         "clue/sse-react": "dev-master"
@@ -28,13 +28,13 @@ The recommended way to install this library is [through composer](http://getcomp
 To run the test suite, you first need to clone this repo and then install all
 dependencies [through Composer](http://getcomposer.org):
 
-```bash
+```sh
 composer install
 ```
 
 To run the test suite, go to the project root and run:
 
-```bash
+```sh
 php vendor/bin/phpunit
 ```
 
