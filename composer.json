@@ -1,5 +1,5 @@
 {
-    "name": "clue/sse-react",
+    "name": "rodber/php-sse-react",
     "description": "Streaming, async HTML5 Server-Sent Events server (aka. SSE or EventSource)",
     "keywords": [
         "Server-Sent Events",
@@ -9,12 +9,16 @@
         "ReactPHP",
         "async"
     ],
-    "homepage": "https://github.com/clue/php-sse-react",
+    "homepage": "https://github.com/rodber/php-sse-react",
     "license": "MIT",
     "authors": [
         {
             "name": "Christian Lück",
             "email": "christian@lueck.tv"
+        },
+        {
+            "name": "Rodolfo Berrios",
+            "email": "rodolfo@chevere.org"
         }
     ],
     "autoload": {
