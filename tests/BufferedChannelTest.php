@@ -1,5 +1,7 @@
 <?php
 
+namespace Clue\React\Tests\Sse;
+
 use Clue\React\Sse\BufferedChannel;
 
 class BufferedChannelTest extends TestCase

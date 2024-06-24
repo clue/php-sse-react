@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- PHPUnit configuration file with new format for PHPUnit 9.6+ -->
+<!-- PHPUnit configuration file with old format for legacy PHPUnit -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/4.8/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         cacheResult="false"
-         colors="true"
-         convertDeprecationsToExceptions="true">
+         colors="true">
     <testsuites>
         <testsuite name="SSE Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
-    <coverage>
-        <include>
+    <filter>
+        <whitelist>
             <directory>./src/</directory>
-        </include>
-    </coverage>
+        </whitelist>
+    </filter>
     <php>
         <ini name="error_reporting" value="-1" />
     </php>
