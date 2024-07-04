@@ -10,9 +10,6 @@
             "email": "christian@lueck.tv"
         }
     ],
-    "autoload": {
-        "psr-4": { "Clue\\React\\Sse\\": "src/" }
-    },
     "require": {
         "php": ">=5.3",
         "react/event-loop": "^1.0",
@@ -21,6 +18,16 @@
     },
     "require-dev": {
         "clue/redis-react": "^2.4",
-        "phpunit/phpunit": "^5.0 || ^4.8"
+        "phpunit/phpunit": "^9.6 || ^7.5 || ^4.8.36"
+    },
+    "autoload": {
+        "psr-4": {
+            "Clue\\React\\Sse\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Clue\\React\\Tests\\Sse\\": "tests/"
+        }
     }
 }

@@ -1,12 +1,17 @@
 <?php
 
+namespace Clue\React\Tests\Sse;
+
 use Clue\React\Sse\Encoder;
 
 class EncoderTest extends TestCase
 {
     private $encoder;
 
-    public function setUp()
+    /**
+     * @before
+     */
+    public function setUpEncoder()
     {
         $this->encoder = new Encoder();
     }
